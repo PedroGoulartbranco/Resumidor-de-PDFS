@@ -1,0 +1,39 @@
+from google import genai
+import os 
+
+import pdfplumber
+
+caminho_pdf = 'baleia.pdf'
+
+def limpar_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def pdf_pequeno(caminho):
+    texto = ""
+    with pdfplumber.open(caminho) as pdf:
+        for pagina in pdf.pages:
+            texto += pagina.extract_text()
+    return texto
+
+def resumir_pdf_pequeno(texto, prompt):
+    prompt_completo = prompt + texto
+    cliente = genai.Client(api_key="AIzaSyBt98UJtbh61A4IL8PwHnmemdxXrVH2Chg")
+    resposta = cliente.models.generate_content(
+        model="gemini-2.5-flash",
+        contents= prompt_completo
+    )
+    return resposta.text
+
+def tipo_resumo():
+    print("[0] Resumo normal\n[1] Resumo Curto\n[2] Resumo Super curto\n[3] Resumo mais tópicos importantes")
+    print("-=" * 30)
+    numero_resumo = int(input("Digite sua opção:"))
+    if numero_resumo == 0:
+        prompt = "Faça um resumo normal do seguinte texto (Quando ver que a linha ficou muito grande quebre ela): "
+    elif numero_resumo == 1:
+        prompt = "Faça um resumo curto desse, mais resumido que o normal do seguinte texto (Quando ver que a linha ficou muito grande quebre ela): "
+    elif numero_resumo == 2:
+        prompt = "Faça um resumo super curto desse texto tentando resumir ele ao máximo (Quando ver que a linha ficou muito grande quebre ela): "
+    elif numero_resumo == 3:
+        prompt = "Faça um resumo curto e mais 3 tópicos importantes do seguinte texto (Quando ver que a linha ficou muito grande quebre ela): "
+    return prompt
