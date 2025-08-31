@@ -29,6 +29,23 @@ def resumir_pdf_pequeno(texto, prompt):
     )
     return resposta.text
 
+def pergunta_resumir_mais():
+    print("[0] Resumir mais\n[1] Continuar")
+    print("-=" * 30)
+    resposta = int(input("Digite sua opção: "))
+    if resposta == 0:
+        return True
+    else:
+        return False
+
+def resumir_mais(texto):
+    cliente = genai.Client(api_key=chave_api)
+    resposta = cliente.models.generate_content(
+        model="gemini-2.5-flash",
+        contents= "Resuma mais esse texto (quando a linha estiver muito grande quebre ela, sem deixar linhas vazias): " + texto
+    )
+    return resposta.text
+
 def tipo_resumo():
     print("[0] Resumo normal\n[1] Resumo Curto\n[2] Resumo Super curto\n[3] Resumo mais tópicos importantes")
     print("-=" * 30)
