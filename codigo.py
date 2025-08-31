@@ -1,5 +1,10 @@
 from google import genai
 import os 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+chave_api = os.getenv('CHAVE_API')
 
 import pdfplumber
 
@@ -17,7 +22,7 @@ def pdf_pequeno(caminho):
 
 def resumir_pdf_pequeno(texto, prompt):
     prompt_completo = prompt + texto
-    cliente = genai.Client(api_key="AIzaSyBt98UJtbh61A4IL8PwHnmemdxXrVH2Chg")
+    cliente = genai.Client(api_key=chave_api)
     resposta = cliente.models.generate_content(
         model="gemini-2.5-flash",
         contents= prompt_completo
