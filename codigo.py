@@ -13,14 +13,18 @@ caminho_pdf = 'baleia.pdf'
 def limpar_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def pdf_pequeno(caminho):
+def pdf_extrair_texto(caminho):
     texto = ""
-    with pdfplumber.open(caminho) as pdf:
-        for pagina in pdf.pages:
-            texto += pagina.extract_text()
-    return texto
+    try:
+        with pdfplumber.open(caminho) as pdf:
+            for pagina in pdf.pages:
+                texto += pagina.extract_text()
+        return texto
+    except FileNotFoundError:
+        print("PDF não encontrado, digite novamento o caminho ou arraste o arquivo.")
+        return False
 
-def resumir_pdf_pequeno(texto, prompt):
+def resumir_pdf(texto, prompt):
     prompt_completo = prompt + texto
     cliente = genai.Client(api_key=chave_api)
     resposta = cliente.models.generate_content(
