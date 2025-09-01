@@ -26,6 +26,9 @@ def pdf_extrair_texto(caminho):
     except FileNotFoundError:
         print("PDF não encontrado, digite novamento o caminho ou arraste o arquivo.")
         return False
+    except:
+        print("Erro, tente novamente!")
+        return False
 
 def resumir_pdf(texto, prompt_cliente):
     prompt_completo = prompt_cliente + texto
