@@ -50,6 +50,7 @@ def resumir_mais(texto):
     return resposta.text
 
 def tipo_resumo():
+    print(" " * 20  + " MENU RESUMO")
     print("[0] Resumo normal\n[1] Resumo Curto\n[2] Resumo Super curto\n[3] Resumo mais tópicos importantes")
     print("-=" * 30)
     numero_resumo = int(input("Digite sua opção:"))

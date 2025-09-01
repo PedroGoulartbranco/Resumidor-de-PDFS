@@ -7,6 +7,7 @@ while True:
     print("Resumidor de PDFs")
     print("-=" * 30)
     caminho_pdf = input("Digite o caminho ou arraste o arquivo do pdf: ")
+    caminho_pdf = caminho_pdf.strip("& '")
     limpar_terminal()
     texto = pdf_extrair_texto(caminho_pdf)
     while texto == False:
@@ -18,6 +19,8 @@ while True:
     prompt = tipo_resumo()
     limpar_terminal()
     print("-=" * 30)
+    print(" " * 25 + " RESUMO")
+    print("-=" * 30)
     texto_resumido = resumir_pdf(texto, prompt)
     print(texto_resumido)
     while resumir_mais_true_false:
@@ -25,6 +28,8 @@ while True:
         resumir_mais_true_false = pergunta_resumir_mais()
         if resumir_mais_true_false:
             texto_resumido = resumir_mais(texto_resumido)
+            print("-=" * 30)
+            print(" " * 25 + " RESUMO")
             print("-=" * 30)
             print(texto_resumido)
     print("-=" * 30)
