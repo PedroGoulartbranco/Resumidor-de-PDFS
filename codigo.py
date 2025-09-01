@@ -1,10 +1,13 @@
-from google import genai
+import google.generativeai as genai
 import os 
 from dotenv import load_dotenv
 
 load_dotenv()
 
 chave_api = os.getenv('CHAVE_API')
+
+genai.configure(api_key=chave_api)
+modelo_gemini = genai.GenerativeModel("gemini-2.5-flash")
 
 import pdfplumber
 
@@ -24,11 +27,9 @@ def pdf_extrair_texto(caminho):
         print("PDF não encontrado, digite novamento o caminho ou arraste o arquivo.")
         return False
 
-def resumir_pdf(texto, prompt):
-    prompt_completo = prompt + texto
-    cliente = genai.Client(api_key=chave_api)
-    resposta = cliente.models.generate_content(
-        model="gemini-2.5-flash",
+def resumir_pdf(texto, prompt_cliente):
+    prompt_completo = prompt_cliente + texto
+    resposta = modelo_gemini.generate_content(
         contents= prompt_completo
     )
     return resposta.text
@@ -43,9 +44,7 @@ def pergunta_resumir_mais():
         return False
 
 def resumir_mais(texto):
-    cliente = genai.Client(api_key=chave_api)
-    resposta = cliente.models.generate_content(
-        model="gemini-2.5-flash",
+    resposta = modelo_gemini.generate_content(
         contents= "Resuma mais esse texto (quando a linha estiver muito grande quebre ela, sem deixar linhas vazias): " + texto
     )
     return resposta.text
