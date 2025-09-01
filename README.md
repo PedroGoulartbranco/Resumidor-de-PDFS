@@ -4,11 +4,11 @@ Este projeto é um script em **Python** que permite ler arquivos PDF e gerar res
 
 ---
 
-[tela_resumo]!(images/1.png)
+![tela_resumo](images/1.png)
 --
-[inicio]!(images/2.png)
+![inicio](images/2.png)
 --
-[menu]!(images/3.png)
+![menu](images/3.png)
 
 ## 🚀 Funcionalidades
 - Ler textos de arquivos PDF.  
